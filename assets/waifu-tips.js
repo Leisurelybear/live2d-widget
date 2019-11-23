@@ -1,7 +1,3 @@
-
-jQuery(document).ready(function($) {
-// “$”符号在这里才能被识别
-
 String.prototype.render = function (context) {
     var tokenReg = /(\\)?\{([^\{\}\\]+)(\\)?\}/g;
 
@@ -25,12 +21,12 @@ String.prototype.render = function (context) {
 
 var re = /x/;
 console.log(re);
-
 re.toString = function() {
     showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 5000, true);
     return '';
 };
 
+jQuery(document).ready(function($) {
 $(document).on('copy', function (){
     showMessage('你都复制了些什么呀，转载要记得加上出处哦', 5000, true);
 });
@@ -68,6 +64,9 @@ $('.waifu-tool .fui-photo').click(function (){
     window.Live2D.captureName = 'Pio.png';
     window.Live2D.captureFrame = true;
 });
+});
+
+
 
 (function (){
     var text;
@@ -124,8 +123,11 @@ var getActed = false;
 window.hitokotoTimer = 0;
 var hitokotoInterval = false;
 
+jQuery(document).ready(function($) {
 $(document).mousemove(function(e){getActed = true;}).keydown(function(){getActed = true;});
 setInterval(function() { if (!getActed) ifActed(); else elseActed(); }, 1000);
+});
+
 
 function ifActed() {
     if (!hitokotoInterval) {
@@ -140,6 +142,7 @@ function elseActed() {
 }
 
 function showHitokoto(){
+jQuery(document).ready(function($) {
 	/* 增加 hitokoto.cn API */
     $.getJSON('https://v1.hitokoto.cn',function(result){
         var text = '这句一言来自 <span style="color:#0099cc;">『{source}』</span>，是 <span style="color:#0099cc;">{creator}</span> 在 hitokoto.cn 投稿的。';
@@ -155,6 +158,7 @@ function showHitokoto(){
         window.setTimeout(function() {showMessage(text, 3000);}, 5000);
     });
 	*/
+});
 }
 
 function showMessage(text, timeout, flag){
@@ -163,19 +167,22 @@ function showMessage(text, timeout, flag){
         //console.log(text);
         
         if(flag) sessionStorage.setItem('waifu-text', text);
-        
+ jQuery(document).ready(function($) {       
         $('.waifu-tips').stop();
         $('.waifu-tips').html(text).fadeTo(200, 1);
+});
         if (timeout === undefined) timeout = 5000;
         hideMessage(timeout);
     }
 }
 
 function hideMessage(timeout){
+jQuery(document).ready(function($) {
     $('.waifu-tips').stop().css('opacity',1);
     if (timeout === undefined) timeout = 5000;
     window.setTimeout(function() {sessionStorage.removeItem('waifu-text')}, timeout);
     $('.waifu-tips').delay(timeout).fadeTo(200, 0);
+});
 }
 
 function initModel(waifuPath){
@@ -192,7 +199,7 @@ function initModel(waifuPath){
         var modelTexturesId = 53    // 材质 ID
         
     } loadModel(modelId, modelTexturesId);
-	
+jQuery(document).ready(function($) {	
 	$.ajax({
         cache: true,
         url: waifuPath+'waifu-tips.json',
@@ -229,6 +236,7 @@ function initModel(waifuPath){
             });
         }
     });
+});
 }
 
 function loadModel(modelId, modelTexturesId){
@@ -243,7 +251,7 @@ function loadRandModel(){
     var modelTexturesId = localStorage.getItem('modelTexturesId');
     
     var modelTexturesRandMode = 'rand';     // 可选 'rand'(随机), 'switch'(顺序)
-    
+jQuery(document).ready(function($) {
     $.ajax({
         cache: false,
         url: 'https://api.fghrsh.net/live2d/'+modelTexturesRandMode+'_textures/?id='+modelId+'-'+modelTexturesId,
@@ -257,13 +265,14 @@ function loadRandModel(){
             loadModel(modelId, result.textures['id']);
         }
     });
+});
 }
 
 function loadOtherModel(){
     var modelId = localStorage.getItem('modelId');
     
     var modelTexturesRandMode = 'switch';     // 可选 'rand'(随机), 'switch'(顺序)
-    
+jQuery(document).ready(function($) {    
     $.ajax({
         cache: false,
         url: 'https://api.fghrsh.net/live2d/'+modelTexturesRandMode+'/?id='+modelId,
@@ -273,6 +282,5 @@ function loadOtherModel(){
             showMessage(result.model['message'], 3000, true);
         }
     });
+});
 }
-	
-	});
