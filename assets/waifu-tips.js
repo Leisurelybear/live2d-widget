@@ -1,3 +1,9 @@
+jQuery(document).ready(function($) {
+
+// “$”符号在这里才能被识别
+
+
+
 String.prototype.render = function (context) {
     var tokenReg = /(\\)?\{([^\{\}\\]+)(\\)?\}/g;
 
@@ -269,3 +275,5 @@ function loadOtherModel(){
         }
     });
 }
+	
+	});
